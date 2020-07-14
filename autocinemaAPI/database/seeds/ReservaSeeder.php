@@ -19,6 +19,7 @@ class ReservaSeeder extends Seeder
         $reserva->tiquete_id = 1;
         $reserva->user_id = 2;
         $reserva->save();
-        $reserva->productos()->attach([1, 1]);
+        //$reserva->productos()->attach([1, 1]);
+        $reserva->productos()->attach([1 => ['cantidad' => 3]]);
     }
 }

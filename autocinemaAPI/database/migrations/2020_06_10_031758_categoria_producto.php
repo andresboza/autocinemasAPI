@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ProductoReserva extends Migration
+class CategoriaProducto extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class ProductoReserva extends Migration
      */
     public function up()
     {
-        Schema::create('producto_reserva', function (Blueprint $table) {
+        Schema::create('categoria_producto', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cantidad');
             $table->unsignedInteger('producto_id');
-            $table->unsignedInteger('reserva_id');
+            $table->unsignedInteger('categoria_id');
             $table->timestamps();
             $table->foreign('producto_id')->references('id')->on('productos');
-            $table->foreign('reserva_id')->references('id')->on('reservas');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 
@@ -31,9 +30,11 @@ class ProductoReserva extends Migration
      */
     public function down()
     {
-        Schema::table('producto_reserva', function (Blueprint $table) {
-            $table->dropForeign('producto_reserva_producto_id_foreign');
-            $table->dropForeign('producto_reserva_reserva_id_foreign');
+        Schema::table('categoria_producto', function (Blueprint $table) {
+            $table->dropForeign('categoria_producto_producto_id_foreign');
+            $table->dropForeign('categoria_producto_categoria_id_foreign');
         });
+
+        Schema::dropIfExists('categoria_producto');
     }
 }
