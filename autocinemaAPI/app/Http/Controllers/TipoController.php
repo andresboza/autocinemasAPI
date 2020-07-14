@@ -14,7 +14,13 @@ class TipoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tipos = Tipo::orderBy('nombre', 'asc')->get();
+            $response = $tipos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class TipoController extends Controller
      * @param  \App\Tipo  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function show(Tipo $tipo)
+    public function show($id)
     {
-        //
+        try {
+            $tipos = Tipo::where('id', $id)->first();
+            $response = $tipos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

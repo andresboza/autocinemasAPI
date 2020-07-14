@@ -14,7 +14,13 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $categorias = Categoria::orderBy('nombre', 'asc')->get();
+            $response = $categorias;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class CategoriaController extends Controller
      * @param  \App\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show($id)
     {
-        //
+        try {
+            $categorias = Categoria::where('id', $id)->first();
+            $response = $categorias;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

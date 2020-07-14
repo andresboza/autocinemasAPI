@@ -14,7 +14,13 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $rols = Rol::orderBy('name', 'asc')->get();
+            $response = $rols;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class RolController extends Controller
      * @param  \App\Rol  $rol
      * @return \Illuminate\Http\Response
      */
-    public function show(Rol $rol)
+    public function show($id)
     {
-        //
+        try {
+            $rols = Rol::where('id', $id)->first();
+            $response = $rols;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

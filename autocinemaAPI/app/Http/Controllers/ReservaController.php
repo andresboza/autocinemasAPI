@@ -14,7 +14,29 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $reservas = Reserva::orderBy('id', 'asc')->get();
+            $response = $reservas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        try {
+            $reservas = Reserva::orderBy('id', 'asc')->with('user', 'cartelera', 'tiquete')->get();
+            $response = $reservas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +66,15 @@ class ReservaController extends Controller
      * @param  \App\Reserva  $reserva
      * @return \Illuminate\Http\Response
      */
-    public function show(Reserva $reserva)
+    public function show($id)
     {
-        //
+        try {
+            $reservas = Reserva::where('id', $id)->with('user', 'cartelera', 'tiquete')->first();
+            $response = $reservas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

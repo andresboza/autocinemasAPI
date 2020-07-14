@@ -14,7 +14,29 @@ class PeliculaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $peliculas = Pelicula::where('habilitar', true)->orderBy('nombre', 'asc')->get();
+            $response = $peliculas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        try {
+            $peliculas = Pelicula::orderBy('nombre', 'asc')->with('clasificacion', 'generos')->get();
+            $response = $peliculas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +66,15 @@ class PeliculaController extends Controller
      * @param  \App\Pelicula  $pelicula
      * @return \Illuminate\Http\Response
      */
-    public function show(Pelicula $pelicula)
+    public function show($id)
     {
-        //
+        try {
+            $peliculas = Pelicula::where('id', $id)->with('clasificacion', 'generos')->first();
+            $response = $peliculas;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

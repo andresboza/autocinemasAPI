@@ -14,7 +14,29 @@ class CarteleraController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $carteleras = Cartelera::where([['disponible', true], ['visible', true]])->orderBy('fecha', 'asc')->get();
+            $response = $carteleras;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        try {
+            $carteleras = Cartelera::orderBy('fecha', 'asc')->with('ubicacion')->get();
+            $response = $carteleras;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +66,15 @@ class CarteleraController extends Controller
      * @param  \App\Cartelera  $cartelera
      * @return \Illuminate\Http\Response
      */
-    public function show(Cartelera $cartelera)
+    public function show($id)
     {
-        //
+        try {
+            $carteleras = Cartelera::where('id', $id)->with('ubicacion')->first();
+            $response = $carteleras;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

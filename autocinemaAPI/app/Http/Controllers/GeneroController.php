@@ -14,7 +14,13 @@ class GeneroController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $generos = Genero::orderBy('nombre', 'asc')->get();
+            $response = $generos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class GeneroController extends Controller
      * @param  \App\Genero  $genero
      * @return \Illuminate\Http\Response
      */
-    public function show(Genero $genero)
+    public function show($id)
     {
-        //
+        try {
+            $generos = Genero::where('id', $id)->first();
+            $response = $generos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

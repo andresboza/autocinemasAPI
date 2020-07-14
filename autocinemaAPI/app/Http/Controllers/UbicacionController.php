@@ -14,7 +14,13 @@ class UbicacionController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $ubicacions = Ubicacion::orderBy('descripcion', 'asc')->get();
+            $response = $ubicacions;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class UbicacionController extends Controller
      * @param  \App\Ubicacion  $ubicacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Ubicacion $ubicacion)
+    public function show($id)
     {
-        //
+        try {
+            $ubicacions = Ubicacion::where('id', $id)->first();
+            $response = $ubicacions;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

@@ -14,7 +14,29 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $productos = Producto::where('habilitar', true)->orderBy('nombre', 'asc')->get();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        try {
+            $productos = Producto::orderBy('nombre', 'asc')->with('tipo', 'categorias')->get();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +66,15 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($id)
     {
-        //
+        try {
+            $productos = Producto::where('id', $id)->with('tipo', 'categorias')->first();
+            $response = $productos;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**

@@ -14,7 +14,13 @@ class TiqueteController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $tiquetes = Tiquete::orderBy('nombre', 'asc')->get();
+            $response = $tiquetes;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
@@ -44,9 +50,15 @@ class TiqueteController extends Controller
      * @param  \App\Tiquete  $tiquete
      * @return \Illuminate\Http\Response
      */
-    public function show(Tiquete $tiquete)
+    public function show($id)
     {
-        //
+        try {
+            $tiquetes = Tiquete::where('id', $id)->first();
+            $response = $tiquetes;
+            return response()->json($response, 200);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 422);
+        }
     }
 
     /**
