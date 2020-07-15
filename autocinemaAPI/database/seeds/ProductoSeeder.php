@@ -39,7 +39,7 @@ class ProductoSeeder extends Seeder
         $producto->categorias()->attach([2]);
 
         $producto = new \App\Producto();
-        $producto->nombre = "PalomitasCaramelo ";
+        $producto->nombre = "Palomitas Caramelo ";
         $producto->descripcion = "Palomitas con caramelo";
         $producto->precio = 3000;
         $producto->habilitar = true;
